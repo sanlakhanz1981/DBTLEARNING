@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_customer
+    description: unique customer table coming from a source
+    columns:
+      - name: customer_id
+        description: This is a primary key for stg_customer table.
+        tests:
+          - not_null
+          - unique
+  - name: stg_orders
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: status
+        description: '{{ doc("order_status")}}'
+        tests:
+          - accepted_values:
+              values:
+                - completed
+                - shipped
+                - returned
+                - return_pending
+                - placed
+      - name: customer_id
+        tests:
+          - relationships:
+              field: customer_id
+              to: ref('stg_customers')
+
+          
+            
