@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw  
+    schema: jaffle_shop  
+    tables:
+      - name: orders
+        description: this is order table
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null                  
+        loaded_at_field: _etl_loaded_at
+        freshness: 
+          warn_after:
+            count: 12
+            period: hour
+          error_after:
+            count: 24
+            period: hour
+      - name: customers
+        description: this is raw customer data.
+        columns:
+          - name: id
+            description: this is a primary key column.
+            tests:
+            - unique
+            - not_null               
+        
+        
+
+  - name: stripe
+    database:  raw
+    tables:
+      - name: payment
+        loaded_at_field: _BATCHED_AT
+        freshness: 
+          warn_after:
+            count: 12
+            period: hour
+          error_after:
+            count: 18
+            period: hour
+        
