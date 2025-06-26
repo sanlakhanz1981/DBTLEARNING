@@ -19,12 +19,20 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10' # Updated to 3.10 for better compatibility with Snowpark Python
+        python-version: '3.10' # Ensure this points to a Python version compatible with snowflake-snowpark-python.
+                               # As per your error, it's crucial this actually resolves to 3.10 or higher.
+                               # If issues persist, consider trying '3.11' or '3.12'.
+
+    - name: Verify Python Version
+      run: python --version # Add this step to explicitly confirm which Python version is active in the environment.
 
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install snowflake-connector-python "snowflake-snowpark-python<1.12.0" # Install required Snowflake libraries, pinning for compatibility
+        python -m pip install snowflake-connector-python "snowflake-snowpark-python<1.12.0" # Install required Snowflake libraries, pinning for compatibility.
+                                                                                           # The "No matching distribution" error for Snowpark typically means
+                                                                                           # the active Python version (as seen in the 'Verify Python Version' step)
+                                                                                           # is incompatible with the specified Snowpark version. Ensure 3.10 or higher is used.
         # python -m pip install requests # Uncomment if you implement GitHub/Bitbucket API calls in the script
 
     - name: Run Code Analysis
