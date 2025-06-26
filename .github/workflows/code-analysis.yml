@@ -54,4 +54,4 @@ jobs:
         # GITHUB_REPOSITORY: ${{ github.repository }}
         # GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }} # Available for pull_request events
         # GITHUB_SHA: ${{ github.sha }} # Available for push events
-      run: python your_analysis_script_name.py # Replace with the actual name of your Python script
+      run: python code_analyzer.py # Replace with the actual name of your Python script
